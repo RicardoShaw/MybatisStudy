@@ -16,6 +16,7 @@ import org.apache.ibatis.annotations.One;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.SelectProvider;
 
 import com.ricardo.mybatis3.domain.Tutor;
 
@@ -38,5 +39,11 @@ public interface TutorMapper {
 			@Result(property="courses",column="tutor_id",many=@Many(select="com.ricardo.mybatis3.mapping.annotation.CourseMapper.findCourseByTutorId"))
 	})
 	public List<Tutor> findAllTutor();
+	
+	@SelectProvider(type=com.ricardo.mybatis3.mapping.dynamicsql.TutorDynaSqlProvider.class,method="findTutorByIdSql")
+	public Tutor findTutorByIdSql(int tutorId);
+	
+	@SelectProvider(type=com.ricardo.mybatis3.mapping.dynamicsql.TutorDynaSqlProvider.class,method="findTutorByIdSql")
+	public Tutor findTutorByIdSql();
 
 }
