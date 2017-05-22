@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ricardo.mybatis3.mapping.xml.UserPicMapper">
+	<resultMap type="com.ricardo.mybatis3.domain.UserPic" id="userPicResult">
+		<id property="id" column="id"/>
+		<result property="name" column="name"/>
+		<result property="pic" column="pic"/>
+		<result property="bio" column="bio"/>
+	</resultMap>
+
+
+	<insert id="insertPic" parameterType="com.ricardo.mybatis3.domain.UserPic" >
+		insert into user_pic(name,pic,bio) values(#{name},#{pic},#{bio})
+	</insert>
+	
+	
+	<select id="selectPic" parameterType="int" resultMap="userPicResult">
+		select * from user_pic where id=#{id}
+	</select>
+
+
+</mapper>

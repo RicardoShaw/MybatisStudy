@@ -71,11 +71,16 @@
 		 
 
 		<select id="getAllStudent"   resultMap="studentResult">
-			select * from students s left outer join addresses a on s.add_id=a.add_id
+			select * from students
  		</select>
  		
  		<select id="getStudent" parameterType="int"   resultMap="studentResult">
  			select * from students where stud_id=#{id}
+ 		</select>
+ 		
+ 		<select id="findAllStudentByNameEmail" resultMap="studentResult">
+ 			select * from students where name=#{param1} and email=#{param2}
+ 			
  		</select>
  		
  		<select id="findStudentWithAddress" parameterType="int" resultMap="studentResult">

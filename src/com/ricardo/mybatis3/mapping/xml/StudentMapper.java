@@ -31,6 +31,7 @@ public interface StudentMapper {
 	
 	public Student findStudentWithAddress(int id);
 	public List<Student> getAllStudent();
+	public List<Student> findAllStudentByNameEmail(String name,String email);
 	public Student getStudent(int id);
 	public void insertStudent(Student student);
 }

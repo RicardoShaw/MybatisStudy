@@ -13,9 +13,11 @@ import static org.junit.Assert.*;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Map;
 
 import junit.framework.Assert;
 
+import org.apache.ibatis.session.RowBounds;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -52,6 +54,7 @@ public class StudentServiceTest {
 	 */
 	@Test
 	public void testGetAllStudent() {
+
 		List<Student> students=studentService.getAllStudent();
 		Assert.assertNotNull(students);
 		for(Student student:students){
@@ -76,6 +79,23 @@ public class StudentServiceTest {
 		System.out.println(student);
 	}
 	
+	@Test
+	public void testFindStudentByNameEmail(){
+		String name ="ricardo";
+		String email="206809449@qq.com";
+		List<Student> students = studentService.findAllStudentByNameEmail(name, email);
+		for(Student student:students){
+			System.out.println(student);
+		}
+	}
+	
+	@Test
+	public void testFindAllStudentIdNameMap(){
+		Map<Integer,String> map = studentService.getStudentIdNameMap();
+		  for (Map.Entry<Integer, String> entry : map.entrySet()) {
+			   System.out.println("key= " + entry.getKey() + " and value= " + entry.getValue());
+			  }
+	}
 	
 
 }
