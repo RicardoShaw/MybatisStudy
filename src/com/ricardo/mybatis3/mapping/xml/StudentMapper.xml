@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 为这个mapper指定一个唯一的namespace，namespace的值习惯上设置成包名+sql映射文件名，这样就能够保证namespace的值是唯一的
+例如namespace="com.ricardo.mybatis3.mapping.userMapper"就是com.ricardo.mybatis3.mapping(包名)+userMapper(userMapper.xml文件去除后缀)
+ XML+Interface模式，namespace同时也是StdentMapper.java
+ -->
+<mapper namespace="com.ricardo.mybatis3.mapping.xml.StudentMapper">
+		<resultMap type="com.ricardo.mybatis3.domain.Student" id="studentResult">
+			<id property="id" column="stud_id"/>
+			<result property="name" column="name"/>
+			<result property="phone" column="phone"/>
+			<result property="gender" column="gender"/>
+			<result property="email" column="email"/>
+			<result property="date" column="dob"/>	
+			<association property="address" resultMap="addressResult"></association>
+			
+		</resultMap>
+		
+		<resultMap type="com.ricardo.mybatis3.domain.Address" id="addressResult">
+			<id property="id" column="add_id"/>
+			<result property="country" column="country"/>
+			<result property="city" column="city"/>
+			<result property="street" column="street"/>		
+		</resultMap>
+		
+		<!-- 
+		<resultMap type="com.ricardo.mybatis3.domain.Student" id="studentResult">
+			<id property="id" column="stud_id"/>
+			<result property="name" column="name"/>
+			<result property="email" column="email"/>
+			<result property="date" column="dob"/>	
+			<association property="address" column="add_id" select="findAddressById"></association>
+		</resultMap>
+		
+		<resultMap type="com.ricardo.mybatis3.domain.Address" id="addressResult">
+			<id property="id" column="add_id"/>
+			<result property="country" column="country"/>
+			<result property="city" column="city"/>
+			<result property="street" column="street"/>		
+		</resultMap>
+		
+		 <select id="findStudentWithAddress" parameterType="int" resultMap="studentResult">
+ 			select * from students where stud_id=#{id}
+ 		</select>
+		
+		<select id="findAddressById" parameterType="int" resultMap="addressResult">
+			select * from addresses where add_id=#{id}
+		</select>
+		
+		 -->
+		<!-- 
+		 
+		 <resultMap type="mStudent" id="studentWithAddressResult">
+		 	<id property="id" column="stud_id"/>
+			<result property="name" column="name"/>
+			<result property="email" column="email"/>
+			<result property="date" column="dob"/>	
+			<association property="address" javaType="mAddress">
+				<id property="id" column="add_id"/>
+				<result property="country" column="countrt"/>
+				<result property="city" column="city"/>
+				<result property="street" column="street"/>	
+			</association>
+		 </resultMap>
+		 
+		 
+		 
+		 
+		 
+		 -->	
+		 
+
+		<select id="getAllStudent"   resultMap="studentResult">
+			select * from students s left outer join addresses a on s.add_id=a.add_id
+ 		</select>
+ 		
+ 		<select id="getStudent" parameterType="int"   resultMap="studentResult">
+ 			select * from students where stud_id=#{id}
+ 		</select>
+ 		
+ 		<select id="findStudentWithAddress" parameterType="int" resultMap="studentResult">
+ 			select * from students s left outer join addresses a on s.add_id=a.add_id where s.stud_id=#{id}
+ 		</select>
+ 		
+		
+		<insert id="insertStudent" parameterType="com.ricardo.mybatis3.domain.Student" useGeneratedKeys="true" keyProperty="id">
+			insert into students(name,gender,phone,email) values(#{name},#{gender},#{phone},#{email}) 
+		</insert>
+		
+		
+		<!-- name email date id 都是mStudent类里面的属性 -->
+		<update id="updateStudent" parameterType="mStudent">
+			update students set name=#{name},phone=#{phone},email=#{email},dob=#{date} where stud_id=#{id}
+		</update>
+
+</mapper>
+ 
+ 
